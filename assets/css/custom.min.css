@@ -1,0 +1,38 @@
+/*# sourceMappingURL=custom.min.css.map */
+
+:root,
+[data-bs-theme="light"] {
+  /* PRIMARY COLOR */
+  --vz-indigo: #0d47a1;
+  --vz-primary: #0d47a1;
+
+  /* RGB VERSION (VERY IMPORTANT) */
+  --vz-primary-rgb: 13, 71, 161;
+
+  /* TEXT EMPHASIS */
+  --vz-primary-text-emphasis: #0a3a86;
+
+  /* SUBTLE BACKGROUNDS */
+  --vz-primary-bg-subtle: #e1ecfa;
+
+  /* BORDERS */
+  --vz-primary-border-subtle: #9bb7e5;
+
+  /* LINKS */
+  --vz-link-color: #0d47a1;
+  --vz-link-hover-color: #0a3a86;
+  --vz-link-color-rgb: 13, 71, 161;
+  --vz-link-hover-color-rgb: 13, 71, 161;
+
+  /* FOCUS RING */
+  --vz-focus-ring-color: rgba(13, 71, 161, 0.25);
+}
+
+html[data-sidebar="dark"] {
+  --vz-vertical-menu-bg: red;
+}
+
+.navbar,
+.vertical-menu {
+  background: red !important;
+}
