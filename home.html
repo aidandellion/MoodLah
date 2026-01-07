@@ -195,11 +195,9 @@
               <li class="nav-item">
                 <a
                   class="nav-link menu-link"
-                  href="#sidebarDashboards"
-                  data-bs-toggle="collapse"
+                  href="#"
+                  data-page="mood-tracking"
                   role="button"
-                  aria-expanded="false"
-                  aria-controls="sidebarDashboards"
                 >
                   <i class="bx bxs-calendar-check"></i>
                   <span data-key="t-dashboards">Mood Tracking</span>
@@ -209,11 +207,9 @@
               <li class="nav-item">
                 <a
                   class="nav-link menu-link"
-                  href="#sidebarLayouts"
-                  data-bs-toggle="collapse"
+                  href="#"
+                  data-page="mood-history"
                   role="button"
-                  aria-expanded="false"
-                  aria-controls="sidebarLayouts"
                 >
                   <i class="ri-history-fill"></i>
                   <span data-key="t-layouts">Mood History</span>
@@ -296,6 +292,133 @@
       <div class="main-content">
         <div class="page-content">
           <div class="container-fluid">
+            <!-- Mood Tracking Page -->
+            <div id="mood-tracking-page" class="mood-page-section" style="display: none;">
+              <div class="row">
+                <div class="col-12">
+                  <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                    <h4 class="mb-sm-0">Mood Tracking</h4>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row" id="mood-tracking-container">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <p class="text-muted mb-4">How are you feeling today? Select your mood and optionally add a note.</p>
+                      
+                      <!-- Mood Selection Buttons -->
+                      <div class="mb-4">
+                        <label class="form-label fw-semibold">Select Your Mood <span class="text-danger">*</span></label>
+                        <div class="d-flex flex-wrap gap-3 mt-2">
+                          <button type="button" class="btn btn-outline-secondary mood-option-btn" data-mood="Happy">
+                            <span class="fs-3 d-block">😊</span>
+                            <span class="d-block mt-1">Happy</span>
+                          </button>
+                          <button type="button" class="btn btn-outline-secondary mood-option-btn" data-mood="Calm">
+                            <span class="fs-3 d-block">😌</span>
+                            <span class="d-block mt-1">Calm</span>
+                          </button>
+                          <button type="button" class="btn btn-outline-secondary mood-option-btn" data-mood="Stressed">
+                            <span class="fs-3 d-block">😰</span>
+                            <span class="d-block mt-1">Stressed</span>
+                          </button>
+                          <button type="button" class="btn btn-outline-secondary mood-option-btn" data-mood="Sad">
+                            <span class="fs-3 d-block">😢</span>
+                            <span class="d-block mt-1">Sad</span>
+                          </button>
+                          <button type="button" class="btn btn-outline-secondary mood-option-btn" data-mood="Angry">
+                            <span class="fs-3 d-block">😠</span>
+                            <span class="d-block mt-1">Angry</span>
+                          </button>
+                        </div>
+                      </div>
+                      
+                      <!-- Notes Input -->
+                      <div class="mb-4">
+                        <label for="mood-note-input" class="form-label fw-semibold">Add a Note (Optional)</label>
+                        <textarea 
+                          class="form-control" 
+                          id="mood-note-input" 
+                          rows="4" 
+                          placeholder="How are you feeling? What's on your mind? (Optional)"
+                        ></textarea>
+                        <div class="form-text">You can add thoughts, feelings, or anything you'd like to remember about today.</div>
+                      </div>
+                      
+                      <!-- Save Button -->
+                      <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-primary" id="save-mood-btn" disabled>
+                          Save Mood
+                        </button>
+                        <a href="#" class="btn btn-soft-secondary" data-page="mood-history">View History</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Mood History Page -->
+            <div id="mood-history-page" class="mood-page-section" style="display: none;">
+              <div class="row">
+                <div class="col-12">
+                  <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                    <h4 class="mb-sm-0">Mood History</h4>
+                    <div class="page-title-right">
+                      <button type="button" class="btn btn-danger btn-sm" id="clear-all-mood-history-btn">
+                        <i class="ri-delete-bin-line align-middle me-1"></i> Clear All History
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row" id="mood-history-container">
+                <div class="col-12">
+                  <!-- Empty State -->
+                  <div id="mood-history-empty" class="card" style="display: none;">
+                    <div class="card-body text-center py-5">
+                      <div class="avatar-md mx-auto mb-4">
+                        <div class="avatar-title bg-primary-subtle text-primary rounded-circle fs-4">
+                          <i class="ri-emotion-line"></i>
+                        </div>
+                      </div>
+                      <h5 class="mb-2">No Mood History Yet</h5>
+                      <p class="text-muted mb-4">Start tracking your mood to see your history here.</p>
+                      <a href="#" class="btn btn-primary" data-page="mood-tracking">
+                        <i class="ri-add-line align-middle me-1"></i> Track Your Mood
+                      </a>
+                    </div>
+                  </div>
+                  
+                  <!-- History Table -->
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" id="mood-history-table" style="display: none;">
+                          <thead class="table-light">
+                            <tr>
+                              <th>Date</th>
+                              <th>Mood</th>
+                              <th>Note</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <!-- Mood entries will be inserted here by JavaScript -->
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Default Dashboard (shown by default) -->
+            <div id="default-dashboard" class="mood-page-section">
             <div class="row mb-3 pb-1">
                 <div class="col-12">
                     <div class="d-flex align-items-lg-center flex-lg-row flex-column">
@@ -2436,6 +2559,8 @@
               <!-- end col -->
             </div>
             <!-- end row -->
+            </div>
+            <!-- end default-dashboard -->
           </div>
           <!-- container-fluid -->
         </div>
@@ -3846,6 +3971,9 @@
 
     <!-- projects js -->
     <script src="assets/js/pages/dashboard-projects.init.js"></script>
+
+    <!-- Mood Tracking js -->
+    <script src="assets/js/pages/mood-tracking.js"></script>
 
     <!-- App js -->
     <script src="assets/js/app.js"></script>
