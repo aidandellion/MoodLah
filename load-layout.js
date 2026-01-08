@@ -1,4 +1,4 @@
-function loadPartial(id, file) {
+function loadLayout(id, file) {
   return fetch(file)
     .then(res => res.text())
     .then(html => {
@@ -18,6 +18,7 @@ function loadPageContent() {
 }
 
 Promise.all([
-  loadPartial("topbar", "layout/topbar.html"),
-  loadPartial("footer", "layout/footer.html"),
+  loadLayout("topbar", "layout/topbar.html"),
+  loadLayout("footer", "layout/footer.html"),
+  loadLayout("theme-settings", "layout/theme-settings.html")
 ]).then(loadPageContent);
