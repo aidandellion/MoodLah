@@ -154,172 +154,257 @@
           </div>
         </div>
       </header>
+    </div>
+
+    <!-- ========== App Menu ========== -->
+    <div class="app-menu navbar-menu">
+      <!-- LOGO -->
+      <div class="navbar-brand-box">
+        <!-- Dark Logo-->
+        <a href="home.html" class="logo logo-dark">
+          <span class="logo-sm">
+            <img src="assets/images/logo-sm.png" alt="" height="32" />
+          </span>
+          <span class="logo-lg">
+            <img src="assets/images/logo-dark.png" alt="" height="27" />
+          </span>
+        </a>
+        <!-- Light Logo-->
+        <a href="home.html" class="logo logo-light">
+          <span class="logo-sm">
+            <img src="assets/images/logo-sm.png" alt="" height="32" />
+          </span>
+          <span class="logo-lg">
+            <img src="assets/images/logo-light.png" alt="" height="27" />
+          </span>
+        </a>
+        <button
+          type="button"
+          class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
+          id="vertical-hover"
+        >
+          <i class="ri-record-circle-line"></i>
+        </button>
       </div>
-      
-      <!-- ========== App Menu ========== -->
-      <div class="app-menu navbar-menu">
-        <!-- LOGO -->
-        <div class="navbar-brand-box">
-          <!-- Dark Logo-->
-          <a href="home.html" class="logo logo-dark">
-            <span class="logo-sm">
-              <img src="assets/images/logo-sm.png" alt="" height="32" />
-            </span>
-            <span class="logo-lg">
-              <img src="assets/images/logo-dark.png" alt="" height="27" />
-            </span>
-          </a>
-          <!-- Light Logo-->
-          <a href="home.html" class="logo logo-light">
-            <span class="logo-sm">
-              <img src="assets/images/logo-sm.png" alt="" height="32" />
-            </span>
-            <span class="logo-lg">
-              <img src="assets/images/logo-light.png" alt="" height="27" />
-            </span>
-          </a>
-          <button
-            type="button"
-            class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
-            id="vertical-hover"
-          >
-            <i class="ri-record-circle-line"></i>
-          </button>
+
+      <div id="scrollbar">
+        <div class="container-fluid">
+          <div id="two-column-menu"></div>
+          <ul class="navbar-nav" id="navbar-nav">
+            <li class="menu-title"><span data-key="t-menu">Menu</span></li>
+            <li class="nav-item">
+              <a
+                class="nav-link menu-link"
+                href="#sidebarDashboards"
+                data-bs-toggle="collapse"
+                role="button"
+                aria-expanded="false"
+                aria-controls="sidebarDashboards"
+              >
+                <i class="bx bxs-calendar-check"></i>
+                <span data-key="t-dashboards">Mood Tracking</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link menu-link"
+                href="#sidebarLayouts"
+                data-bs-toggle="collapse"
+                role="button"
+                aria-expanded="false"
+                aria-controls="sidebarLayouts"
+              >
+                <i class="ri-history-fill"></i>
+                <span data-key="t-layouts">Mood History</span>
+                <span class="badge badge-pill bg-danger" data-key="t-hot"
+                  >Hot</span
+                >
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link menu-link"
+                href="#sidebarDashboards"
+                data-bs-toggle="collapse"
+                role="button"
+                aria-expanded="false"
+                aria-controls="sidebarDashboards"
+              >
+                <i class="ri-user-smile-fill"></i>
+                <span data-key="t-dashboards">Wellness Tips</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link menu-link"
+                href="#sidebarDashboards"
+                data-bs-toggle="collapse"
+                role="button"
+                aria-expanded="false"
+                aria-controls="sidebarDashboards"
+              >
+                <i class="ri-open-arm-line"></i>
+                <span data-key="t-dashboards">Calming Exercises</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link menu-link"
+                href="#sidebarDashboards"
+                data-bs-toggle="collapse"
+                role="button"
+                aria-expanded="false"
+                aria-controls="sidebarDashboards"
+              >
+                <i class="ri-file-list-2-fill"></i>
+                <span data-key="t-dashboards">Weekly Report</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link menu-link"
+                href="#sidebarDashboards"
+                data-bs-toggle="collapse"
+                role="button"
+                aria-expanded="false"
+                aria-controls="sidebarDashboards"
+              >
+                <i class="ri-team-fill"></i>
+                <span data-key="t-dashboards">About Us</span>
+              </a>
+            </li>
+            <!-- end Dashboard Menu -->
+          </ul>
         </div>
 
-        <div id="scrollbar">
-          <div class="container-fluid">
-            <div id="two-column-menu"></div>
-            <ul class="navbar-nav" id="navbar-nav">
-              <li class="menu-title"><span data-key="t-menu">Menu</span></li>
-              <li class="nav-item">
-                <a
-                  class="nav-link menu-link"
-                  href="#sidebarDashboards"
-                  data-bs-toggle="collapse"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="sidebarDashboards"
-                >
-                  <i class="bx bxs-calendar-check"></i>
-                  <span data-key="t-dashboards">Mood Tracking</span>
-                </a>
-              </li>
+        <!-- Sidebar -->
+      </div>
+      <div class="sidebar-background"></div>
+    </div>
+    <!-- Left Sidebar End -->
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
 
-              <li class="nav-item">
-                <a
-                  class="nav-link menu-link"
-                  href="#sidebarLayouts"
-                  data-bs-toggle="collapse"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="sidebarLayouts"
-                >
-                  <i class="ri-history-fill"></i>
-                  <span data-key="t-layouts">Mood History</span>
-                  <span class="badge badge-pill bg-danger" data-key="t-hot"
-                    >Hot</span
-                  >
-                </a>
-              </li>
-
-            <li class="nav-item">
-                <a
-                  class="nav-link menu-link"
-                  href="#sidebarDashboards"
-                  data-bs-toggle="collapse"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="sidebarDashboards"
-                >
-                  <i class="ri-user-smile-fill"></i>
-                  <span data-key="t-dashboards">Wellness Tips</span>
-                </a>
-              </li>
-
-            <li class="nav-item">
-                <a
-                  class="nav-link menu-link"
-                  href="#sidebarDashboards"
-                  data-bs-toggle="collapse"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="sidebarDashboards"
-                >
-                  <i class="ri-open-arm-line"></i>
-                  <span data-key="t-dashboards">Calming Exercises</span>
-                </a>
-              </li>
-
-            <li class="nav-item">
-                <a
-                  class="nav-link menu-link"
-                  href="#sidebarDashboards"
-                  data-bs-toggle="collapse"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="sidebarDashboards"
-                >
-                  <i class="ri-file-list-2-fill"></i>
-                  <span data-key="t-dashboards">Weekly Report</span>
-                </a>
-              </li>
-
-            <li class="nav-item">
-                <a
-                  class="nav-link menu-link"
-                  href="#sidebarDashboards"
-                  data-bs-toggle="collapse"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="sidebarDashboards"
-                >
-                  <i class="ri-team-fill"></i>
-                  <span data-key="t-dashboards">About Us</span>
-                </a>
-              </li>
-              <!-- end Dashboard Menu -->
-            </ul>
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+      <div class="page-content">
+        <div class="container-fluid">
+          <!-- Title -->
+          <div class="row mb-4">
+            <div class="col-12">
+              <h2 class="fs-25 mb-2">About Us</h2>
+              <p class="text-muted">
+                Meet the passionate team behind MoodLah, dedicated to supporting
+                your mental wellness every day.
+              </p>
+            </div>
           </div>
 
-          <!-- Sidebar -->
-        </div>
-        <div class="sidebar-background"></div>
-      </div>
-      <!-- Left Sidebar End -->
-      <!-- Vertical Overlay-->
-      <div class="vertical-overlay"></div>
-
-      <!-- ============================================================== -->
-      <!-- Start right Content here -->
-      <!-- ============================================================== -->
-      <div class="main-content">
-        <div class="page-content">
-            <div class="container-fluid">
-              <div class="row mb-3 pb-1">
-                  <div class="col-12">
-                      <div class="d-flex align-items-lg-center flex-lg-row flex-column">
-                          <div class="flex-grow-1">
-                              <h2 class="fs-25 mb-1">About Us</h2><br>
-                              <p>Meet the passionate team behind MoodLah, dedicated to supporting your mental wellness every day.</p>
-                          </div>
-                      </div><!-- end card header -->
-                  </div>
-                  <!--end col-->
-                  <div class="row-12">
-                    <img src="pic_trulli.jpg" alt="Italian Trulli">
-                    <img src="pic_trulli.jpg" alt="Italian Trulli">
-                  </div>
-                  <div>
-                    <img src="pic_trulli.jpg" alt="Italian Trulli">
-                    <img src="pic_trulli.jpg" alt="Italian Trulli">
-                  </div>
+          <!-- Team Section -->
+          <div class="row g-4">
+            <!-- Member 1 -->
+            <div class="col-md-6">
+              <div
+                class="d-flex bg-white shadow-sm rounded p-3 align-items-center"
+              >
+                <img
+                  src="assets/images/users/avatar-1.jpg"
+                  class="avatar-xl rounded-circle me-3"
+                />
+                <div>
+                  <h5>Ahmad Faris</h5>
+                  <p class="text-muted mb-0">
+                    Passionate about building meaningful wellness solutions for
+                    users.
+                  </p>
+                </div>
               </div>
             </div>
+
+            <!-- Member 2 -->
+            <div class="col-md-6">
+              <div
+                class="d-flex bg-white shadow-sm rounded p-3 align-items-center"
+              >
+                <img
+                  src="assets/images/users/avatar-2.jpg"
+                  class="avatar-xl rounded-circle me-3"
+                />
+                <div>
+                  <h5>Aida Syazwani</h5>
+                  <p class="text-muted mb-0">
+                    Focused on user experience and emotional well-being design.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Member 3 -->
+            <div class="col-md-6">
+              <div
+                class="d-flex bg-white shadow-sm rounded p-3 align-items-center"
+              >
+                <img
+                  src="assets/images/users/avatar-3.jpg"
+                  class="avatar-xl rounded-circle me-3"
+                />
+                <div>
+                  <h5>Athiqah Tsaljun</h5>
+                  <p class="text-muted mb-0">
+                    Ensures system security, performance, and reliability.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Member 4 -->
+            <div class="col-md-6">
+              <div
+                class="d-flex bg-white shadow-sm rounded p-3 align-items-center"
+              >
+                <img
+                  src="assets/images/users/avatar-4.jpg"
+                  class="avatar-xl rounded-circle me-3"
+                />
+                <div>
+                  <h5>Aina Alysha</h5>
+                  <p class="text-muted mb-0">
+                    Creates calming visuals and friendly user interfaces.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Member 5 (Centered) -->
+            <div class="col-md-6 offset-md-3">
+              <div
+                class="d-flex bg-white shadow-sm rounded p-3 align-items-center justify-content-center"
+              >
+                <img
+                  src="assets/images/users/avatar-5.jpg"
+                  class="avatar-xl rounded-circle me-3"
+                />
+                <div>
+                  <h5>Puteri Lyana</h5>
+                  <p class="text-muted mb-0">
+                    Supports content creation and wellness engagement
+                    strategies.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
     </div>
+
     <!-- END layout-wrapper -->
 
     <!--start back-to-top-->
