@@ -252,18 +252,11 @@
               </li>
 
             <li class="nav-item">
-                <a
-                  class="nav-link menu-link"
-                  href="weekly-report.html"
-                  data-bs-toggle="collapse"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="sidebarDashboards"
-                >
-                  <i class="ri-file-list-2-fill"></i>
-                  <span data-key="t-dashboards">Weekly Report</span>
+                <a class="nav-link menu-link active" href="weekly-report.html">
+                    <i class="ri-file-list-2-fill"></i>
+                    <span>Weekly Report</span>
                 </a>
-              </li>
+            </li>
 
             <li class="nav-item">
                 <a
@@ -290,142 +283,119 @@
       <!-- Vertical Overlay-->
       <div class="vertical-overlay"></div>
 
-     <!-- ============================================================== -->
-<!-- Start right Content here -->
-<!-- ============================================================== -->
-<div class="main-content">
-  <div class="page-content">
-    <div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
 
-      <!-- Weekly Report Section -->
-      <div class="row">
-        <!-- Form column -->
-        <div class="col-lg-6">
-          <div class="card">
-            <div class="card-header">
-              <h5 class="card-title mb-0">Weekly Mood Report</h5>
-            </div>
-
-            <div class="card-body">
-              <!-- Week input -->
-              <div class="mb-3">
-                <label class="form-label">Week</label>
-                <input
-                  type="text"
-                  id="week"
-                  class="form-control"
-                  placeholder="Week 1"
-                />
-              </div>
-
-              <!-- Mood selection -->
-              <div class="mb-3">
-                <label class="form-label">Overall Mood</label>
-                <select id="mood" class="form-control">
-                  <option value="">Select mood</option>
-                  <option>Happy</option>
-                  <option>Calm</option>
-                  <option>Stressed</option>
-                  <option>Sad</option>
-                </select>
-              </div>
-
-              <!-- Reflection text -->
-              <div class="mb-3">
-                <label class="form-label">Weekly Reflection</label>
-                <textarea
-                  id="note"
-                  class="form-control"
-                  rows="4"
-                  placeholder="Write your reflection for this week..."
-                ></textarea>
-              </div>
-
-              <!-- Save button -->
-              <button class="btn btn-primary" onclick="saveReport()">
-                Save Weekly Report
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Saved reports column -->
-        <div class="col-lg-6">
-            <div class="card mt-3">
+        <!-- Weekly Report Section -->
+        <div class="row">
+            <!-- Form column -->
+            <div class="col-lg-6">
+            <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Weekly Report Summary</h5>
+                <h5 class="card-title mb-0">Weekly Mood Report</h5>
                 </div>
 
                 <div class="card-body">
-                    <button class="btn btn-success mb-3" onclick="generateSummary()">
-                    Generate Summary
-                    </button>
+                <!-- Week input -->
+                <div class="mb-3">
+                    <label class="form-label">Week</label>
+                    <input
+                    type="text"
+                    id="week"
+                    class="form-control"
+                    placeholder="Week 1"
+                    />
+                </div>
 
-                    <div id="summaryOutput" class="mt-3">
-                    <p class="text-muted">Click "Generate Summary" to view report.</p>
+                <!-- Mood selection -->
+                <div class="mb-3">
+                    <label class="form-label">Overall Mood</label>
+                    <select id="mood" class="form-control">
+                    <option value="">Select mood</option>
+                    <option>Happy</option>
+                    <option>Calm</option>
+                    <option>Stressed</option>
+                    <option>Sad</option>
+                    </select>
+                </div>
+
+                <!-- Reflection text -->
+                <div class="mb-3">
+                    <label class="form-label">Weekly Reflection</label>
+                    <textarea
+                    id="note"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Write your reflection for this week..."
+                    ></textarea>
+                </div>
+
+                <!-- Save button -->
+                <button class="btn btn-primary" onclick="saveReport()">
+                    Save Weekly Report
+                </button>
+                </div>
+            </div>
+            </div>
+
+            <!-- Saved reports column -->
+            <div class="col-lg-6">
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Weekly Report Summary</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <button class="btn btn-success mb-3" onclick="generateSummary()">
+                        Generate Summary
+                        </button>
+
+                        <div id="summaryOutput" class="mt-3">
+                        <p class="text-muted">Click "Generate Summary" to view report.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-          <div class="card">
-            <div class="card-header">
-              <h5 class="card-title mb-0">Saved Reports</h5>
-            </div>
-
-            <div class="card-body">
-              <!-- List where reports will appear -->
-              <ul class="list-group" id="reportList"></ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- Footer stays -->
-  <footer class="footer">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-6">
-          <script>
-            document.write(new Date().getFullYear());
-          </script>
-          © MoodLah.
-        </div>
-        <div class="col-sm-6">
-          <div class="text-sm-end d-none d-sm-block">
-            Weekly Report Module
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
-</div>
-<!-- end main content -->
-
-        <!-- End Page-content -->
-
-        <footer class="footer">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-sm-6">
-                <script>
-                  document.write(new Date().getFullYear());
-                </script>
-                © Velzon.
-              </div>
-              <div class="col-sm-6">
-                <div class="text-sm-end d-none d-sm-block">
-                  Design & Develop by Themesbrand
+            <div class="card">
+                <div class="card-header">
+                <h5 class="card-title mb-0">Saved Reports</h5>
                 </div>
-              </div>
+
+                <div class="card-body">
+                <!-- List where reports will appear -->
+                <ul class="list-group" id="reportList"></ul>
+                </div>
             </div>
-          </div>
-        </footer>
-      </div>
-      <!-- end main content-->
+            </div>
+        </div>
+
+        </div>
     </div>
+
+    <!-- Footer stays -->
+    <footer class="footer">
+        <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+            <script>
+                document.write(new Date().getFullYear());
+            </script>
+            © MoodLah.
+            </div>
+            <div class="col-sm-6">
+            <div class="text-sm-end d-none d-sm-block">
+                Weekly Report Module
+            </div>
+            </div>
+        </div>
+        </div>
+    </footer>
+    </div>
+    <!-- end main content -->
 
     <!--start back-to-top-->
     <button
@@ -1804,12 +1774,6 @@
     <script src="assets/libs/feather-icons/feather.min.js"></script>
     <script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
     <script src="assets/js/plugins.js"></script>
-
-    <!-- apexcharts -->
-    <script src="assets/libs/apexcharts/apexcharts.min.js"></script>
-
-    <!-- projects js -->
-    <script src="assets/js/pages/dashboard-projects.init.js"></script>
 
     <!-- App js -->
     <script src="assets/js/app.js"></script>
