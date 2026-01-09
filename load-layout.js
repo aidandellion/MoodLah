@@ -20,5 +20,4 @@ function loadPageContent() {
 Promise.all([
   loadLayout("topbar", "layout/topbar.html"),
   loadLayout("footer", "layout/footer.html"),
-  loadLayout("theme-settings", "layout/theme-settings.html")
 ]).then(loadPageContent);
