@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Mood Tracking</h4>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">Record Your Mood</h4>
+            </div>
+            <div class="card-body">
+                <form id="moodForm">
+                    <div class="mb-3">
+                        <label for="moodDate" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="moodDate" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">How make you feel?</label>
+                        <div class="d-flex justify-content-between text-center">
+                            <div>
+                                <input type="radio" class="btn-check" name="moodOption" id="moodHappy" value="Happy"
+                                    required>
+                                <label class="btn btn-outline-success rounded-circle p-2" for="moodHappy"
+                                    style="width: 50px; height: 50px;">
+                                    <i class="ri-emotion-happy-line fs-24"></i>
+                                </label>
+                                <div class="mt-1 fs-12">Happy</div>
+                            </div>
+                            <div>
+                                <input type="radio" class="btn-check" name="moodOption" id="moodCalm" value="Calm">
+                                <label class="btn btn-outline-info rounded-circle p-2" for="moodCalm"
+                                    style="width: 50px; height: 50px;">
+                                    <i class="ri-emotion-normal-line fs-24"></i>
+                                </label>
+                                <div class="mt-1 fs-12">Calm</div>
+                            </div>
+                            <div>
+                                <input type="radio" class="btn-check" name="moodOption" id="moodStressed"
+                                    value="Stressed">
+                                <label class="btn btn-outline-warning rounded-circle p-2" for="moodStressed"
+                                    style="width: 50px; height: 50px;">
+                                    <i class="ri-emotion-line fs-24"></i>
+                                </label>
+                                <div class="mt-1 fs-12">Stressed</div>
+                            </div>
+                            <div>
+                                <input type="radio" class="btn-check" name="moodOption" id="moodSad" value="Sad">
+                                <label class="btn btn-outline-primary rounded-circle p-2" for="moodSad"
+                                    style="width: 50px; height: 50px;">
+                                    <i class="ri-emotion-sad-line fs-24"></i>
+                                </label>
+                                <div class="mt-1 fs-12">Sad</div>
+                            </div>
+                            <div>
+                                <input type="radio" class="btn-check" name="moodOption" id="moodAngry" value="Angry">
+                                <label class="btn btn-outline-danger rounded-circle p-2" for="moodAngry"
+                                    style="width: 50px; height: 50px;">
+                                    <i class="ri-emotion-unhappy-line fs-24"></i>
+                                </label>
+                                <div class="mt-1 fs-12">Angry</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="moodNote" class="form-label">Note (Optional)</label>
+                        <textarea class="form-control" id="moodNote" rows="3"
+                            placeholder="Describe your day..."></textarea>
+                    </div>
+
+                    <div id="saveFeedback" class="alert d-none" role="alert"></div>
+
+                    <button type="submit" class="btn btn-success w-100">Save Mood</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
