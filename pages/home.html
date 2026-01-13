@@ -1,0 +1,210 @@
+<div class="row mb-3 pb-1">
+                <div class="col-12">
+                    <div class="d-flex align-items-lg-center flex-lg-row flex-column">
+                        <div class="flex-grow-1">
+                            <h4 class="fs-16 mb-1">Good Morning, Anna!</h4>
+                            <p class="text-muted mb-0">Here's what's happening with your wellnes tracker today.</p>
+                        </div>
+                    </div><!-- end card header -->
+                </div>
+                <!--end col-->
+            </div>
+            
+            <div class="row project-wrapper">
+              <div class="col-xxl-8">
+                <div class="row">
+
+                  <!-- CARD 1: Mood Entries -->
+                  <div class="col-xl-4">
+                    <div class="card card-animate">
+                      <div class="card-body">
+                        <div class="d-flex align-items-center">
+                          <div class="avatar-sm flex-shrink-0">
+                            <span class="avatar-title bg-primary-subtle text-primary rounded-2 fs-2">
+                              <i data-feather="activity" class="text-primary"></i>
+                            </span>
+                          </div>
+
+                          <div class="flex-grow-1 overflow-hidden ms-3">
+                            <p class="text-uppercase fw-medium text-muted text-truncate mb-3">
+                              Mood Entries
+                            </p>
+
+                            <div class="d-flex align-items-center mb-3">
+                              <h4 class="fs-4 flex-grow-1 mb-0">
+                                <span id="statMoodEntries" class="counter-value">0</span>
+                              </h4>
+
+                              <span id="badgeMoodEntries" class="badge bg-success-subtle text-success fs-12">
+                                <i class="ri-arrow-up-s-line fs-13 align-middle me-1"></i>
+                                <span id="trendMoodEntries">0%</span>
+                              </span>
+                            </div>
+
+                            <p class="text-muted text-truncate mb-0">
+                              Entries logged this week
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- end col -->
+
+                  <!-- CARD 2: Positive Days -->
+                  <div class="col-xl-4">
+                    <div class="card card-animate">
+                      <div class="card-body">
+                        <div class="d-flex align-items-center">
+                          <div class="avatar-sm flex-shrink-0">
+                            <span class="avatar-title bg-warning-subtle text-warning rounded-2 fs-2">
+                              <i data-feather="smile" class="text-warning"></i>
+                            </span>
+                          </div>
+
+                          <div class="flex-grow-1 ms-3">
+                            <p class="text-uppercase fw-medium text-muted mb-3">
+                              Positive Days
+                            </p>
+
+                            <div class="d-flex align-items-center mb-3">
+                              <h4 class="fs-4 flex-grow-1 mb-0">
+                                <span id="statPositiveDays" class="counter-value">0</span>
+                              </h4>
+
+                              <span id="badgePositiveDays" class="badge bg-success-subtle text-success fs-12">
+                                <i class="ri-arrow-up-s-line fs-13 align-middle me-1"></i>
+                                <span id="trendPositiveDays">0%</span>
+                              </span>
+                            </div>
+
+                            <p class="text-muted mb-0">Days with positive mood</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- end col -->
+
+                  <!-- CARD 3: Tracking Streak -->
+                  <div class="col-xl-4">
+                    <div class="card card-animate">
+                      <div class="card-body">
+                        <div class="d-flex align-items-center">
+                          <div class="avatar-sm flex-shrink-0">
+                            <span class="avatar-title bg-info-subtle text-info rounded-2 fs-2">
+                              <i data-feather="calendar" class="text-info"></i>
+                            </span>
+                          </div>
+
+                          <div class="flex-grow-1 overflow-hidden ms-3">
+                            <p class="text-uppercase fw-medium text-muted text-truncate mb-3">
+                              Tracking Streak
+                            </p>
+
+                            <div class="d-flex align-items-center mb-3">
+                              <h4 class="fs-4 flex-grow-1 mb-0">
+                                <span id="statStreak" class="counter-value">0</span> days
+                              </h4>
+
+                              <span id="badgeStreak" class="badge bg-success-subtle text-success fs-12">
+                                <i class="ri-arrow-up-s-line fs-13 align-middle me-1"></i>
+                                <span id="trendStreak">0%</span>
+                              </span>
+                            </div>
+
+                            <p class="text-muted text-truncate mb-0">
+                              Consistency this week
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- end col -->
+
+                </div>
+              </div>
+            </div>
+
+            <!-- end row -->
+             
+            <div class="row">
+               <div class="col-xl-8">
+                <div class="card card-height-100">
+                  <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">Moods Overview</h4>
+
+                    <div class="flex-shrink-0">
+                      <div class="dropdown card-header-dropdown">
+                        <a
+                          class="dropdown-btn text-muted"
+                          href="#"
+                          data-bs-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                          id="moodRangeBtn"
+                        >
+                          All Time <i class="mdi mdi-chevron-down ms-1"></i>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-end">
+                          <a class="dropdown-item mood-range" href="#" data-range="all">All Time</a>
+                          <a class="dropdown-item mood-range" href="#" data-range="7">Last 7 Days</a>
+                          <a class="dropdown-item mood-range" href="#" data-range="30">Last 30 Days</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- end card header -->
+
+                  <div class="card-body">
+
+                    <!-- Donut chart -->
+                    <div id="mood-overview-chart" class="apex-charts" dir="ltr"></div>
+
+                    <!-- Only Total -->
+                    <div class="mt-3">
+                      <div class="d-flex justify-content-center align-items-center mb-2">
+                        <h2 class="me-2 ff-secondary mb-0" id="moodTotalCount">0</h2>
+                        <p class="text-muted mb-0">Total Mood Entries</p>
+                      </div>
+                    </div>
+
+                  </div>
+                  <!-- end cardbody -->
+                </div>
+                <!-- end card -->
+              </div>
+              <!-- end col -->
+
+              <div class="col-xl-4 ">
+                <div class="card">
+                  <div class="card-header border-0">
+                    <h4 class="card-title mb-0">Quotes of the Day</h4>
+                  </div>
+
+                  <div class="card-body pt-0">
+                    <div id="quotesList"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+
+
+      </div>
+      <!-- end main content-->
+    </div>
+    <!-- END layout-wrapper -->
+
+   
+      </div>
+    </div>
+
+

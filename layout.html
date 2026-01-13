@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg"
+  data-sidebar-image="none" data-preloader="disable">
+
+<head>
+  <meta charset="utf-8" />
+  <title>MoodLah!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- App favicon -->
+  <link rel="shortcut icon" href="assets/images/favicon.ico" />
+
+  <!-- Layout config -->
+  <script src="assets/js/layout.js"></script>
+
+  <!-- CSS -->
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="assets/css/icons.min.css" rel="stylesheet" />
+  <link href="assets/css/app.min.css" rel="stylesheet" />
+  <link href="assets/css/custom.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div id="layout-wrapper">
+
+    <!-- Injected -->
+    <div id="topbar"></div>
+    <!-- ========== App Menu ========== -->
+    <div class="app-menu navbar-menu">
+      <!-- LOGO -->
+      <div class="navbar-brand-box">
+        <!-- Dark Logo-->
+        <a href="layout.html?page=home" class="logo logo-dark">
+          <span class="logo-sm">
+            <img src="assets/images/logo-sm.png" alt="" height="32" />
+          </span>
+          <span class="logo-lg">
+            <img src="assets/images/logo-dark.png" alt="" height="27" />
+          </span>
+        </a>
+        <!-- Light Logo-->
+        <a href="layout.html?page=home" class="logo logo-light">
+          <span class="logo-sm">
+            <img src="assets/images/logo-sm.png" alt="" height="32" />
+          </span>
+          <span class="logo-lg">
+            <img src="assets/images/logo-light.png" alt="" height="27" />
+          </span>
+        </a>
+        <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
+          id="vertical-hover">
+          <i class="ri-record-circle-line"></i>
+        </button>
+      </div>
+
+      <div id="scrollbar">
+        <div class="container-fluid">
+          <div id="two-column-menu"></div>
+          <ul class="navbar-nav" id="navbar-nav">
+            <li class="menu-title"><span data-key="t-menu">Menu</span></li>
+            <li class="nav-item">
+              <a class="nav-link menu-link" href="layout.html?page=mood-tracking" role="button" aria-expanded="false"
+                aria-controls="sidebarDashboards">
+                <i class="bx bxs-calendar-check"></i>
+                <span data-key="t-dashboards">Mood Tracking</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link menu-link" href="layout.html?page=mood-history" role="button" aria-expanded="false"
+                aria-controls="sidebarLayouts">
+                <i class="ri-history-fill"></i>
+                <span data-key="t-layouts">Mood History</span>
+                <span class="badge badge-pill bg-danger" data-key="t-hot">Hot</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link menu-link" href="layout.html?page=wellness" role="button" aria-expanded="false"
+                aria-controls="sidebarDashboards">
+                <i class="ri-user-smile-fill"></i>
+                <span data-key="t-dashboards">Wellness Tips</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link menu-link" href="layout.html?page=calming-exercises" role="button"
+                aria-expanded="false" aria-controls="sidebarDashboards">
+                <i class="ri-open-arm-line"></i>
+                <span data-key="t-dashboards">Calming Exercises</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link menu-link" href="layout.html?page=weekly-report" role="button" aria-expanded="false"
+                aria-controls="sidebarDashboards">
+                <i class="ri-file-list-2-fill"></i>
+                <span data-key="t-dashboards">Weekly Report</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link menu-link" href="#sidebarDashboards" role="button" aria-expanded="false"
+                aria-controls="sidebarDashboards">
+                <i class="ri-team-fill"></i>
+                <span data-key="t-dashboards">About Us</span>
+              </a>
+            </li>
+            <!-- end Dashboard Menu -->
+          </ul>
+        </div>
+
+        <!-- Sidebar -->
+      </div>
+      <div class="sidebar-background"></div>
+    </div>
+    <!-- Left Sidebar End -->
+    <!-- Vertical Overlay-->
+    <div class="vertical-overlay"></div>
+
+    <!-- PAGE CONTENT -->
+    <div class="main-content">
+      <div class="page-content">
+        <div class="container-fluid" id="page-content">
+          <!-- Page-specific content loads here -->
+        </div>
+      </div>
+
+      <div id="footer"></div>
+    </div>
+  </div>
+
+
+  <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/libs/simplebar/simplebar.min.js"></script>
+  <script src="assets/libs/node-waves/waves.min.js"></script>
+  <script src="assets/libs/feather-icons/feather.min.js"></script>
+  <script src="assets/js/plugins.js"></script>
+
+  <!-- app.js MUST come AFTER theme settings HTML -->
+  <script src="assets/js/app.js"></script>
+
+  <script src="assets/js/calming-exercises.js"></script>
+  <script src="assets/js/wellness.js"></script>
+  <script src="assets/js/mood-tracking.js"></script>
+  <script src="assets/js/mood-history.js"></script>
+  <script src="load-layout.js"></script>
+
+</body>
+
+</html>
