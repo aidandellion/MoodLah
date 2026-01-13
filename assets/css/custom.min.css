@@ -36,3 +36,19 @@ html[data-sidebar="dark"] {
 .vertical-menu {
   background: red !important;
 }
+
+.breathing-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+
+#breathingCircle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #5bc0de, #0d6efd);
+  transition: transform 4s ease-in-out;
+}
+
