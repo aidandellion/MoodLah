@@ -1,331 +1,236 @@
 /**
- * Enhanced Weekly Report Logic
- * Groups mood history by weeks and displays "This Week's Report" format
+ * WEEKLY REPORT SYSTEM
+ * =====================
+ * This script generates a weekly mood tracking report that:
+ * 1. Reads mood data from localStorage
+ * 2. Filters entries for the current week (Monday-Sunday)
+ * 3. Displays mood statistics and most common mood
+ * 4. Allows users to download the report as PDF
  */
 
-// Wait for the page content to load before applying the logic
-document.addEventListener("DOMContentLoaded", () => {
-    // Use MutationObserver to detect when the summary output is available, and then auto-generate the report
-    const observer = new MutationObserver(() => {
-        const summaryOutput = document.getElementById("summaryOutput");
-        if (summaryOutput && !summaryOutput.dataset.initialized) {
-            summaryOutput.dataset.initialized = "true"; // Mark as initialized to prevent multiple triggers
-            generateWeeklyReport(); // Auto-generate the report when the page loads
-            observer.disconnect(); // Disconnect the observer after it has been used
-        }
-    });
-
-    // Observe the content area or the entire page if no specific content area is found
-    const contentArea = document.getElementById("page-content") || document.body;
-    observer.observe(contentArea, { childList: true, subtree: true }); // Listen for changes in the page content
-});
+// ===== INITIALIZATION =====
 
 /**
- * Generates the weekly report by fetching mood data from localStorage,
- * grouping it by week, and then rendering the data into the page.
+ * Checks if all required HTML elements are loaded in the DOM
+ * Returns true if elements exist, false if they need to wait
+ */
+function initializeReport() {
+    // Get the three main elements needed for the report
+    const summaryOutput = document.getElementById("summaryOutput");
+    const reportStats = document.getElementById("reportStats");
+    const downloadButton = document.getElementById("downloadReport");
+
+    // If any element is missing, return false to try again later
+    if (!summaryOutput || !reportStats || !downloadButton) {
+        return false;
+    }
+
+    // All elements found! Generate the report and setup download button
+    generateWeeklyReport();
+    downloadButton.addEventListener("click", downloadReportAsPDF);
+    
+    return true;
+}
+
+/**
+ * Waits for the page to load, then initializes the report
+ * Uses MutationObserver to handle dynamic content loading
+ * (Important for single-page applications where content loads after page ready)
+ */
+document.addEventListener("DOMContentLoaded", function () {
+    // Try to initialize immediately
+    if (!initializeReport()) {
+        // If elements aren't ready yet, watch for DOM changes
+        const observer = new MutationObserver(function() {
+            if (initializeReport()) {
+                // Success! Stop watching for changes
+                observer.disconnect();
+            }
+        });
+
+        // Start watching the entire document for new elements
+        observer.observe(document.body, {
+            childList: true,  // Watch for added/removed elements
+            subtree: true     // Watch all descendants, not just direct children
+        });
+    }
+});
+
+// ===== MAIN REPORT GENERATION =====
+
+/**
+ * Main function that generates the weekly mood report
+ * Reads data from localStorage, filters by current week, and displays results
  */
 function generateWeeklyReport() {
+    // Get references to the output containers
     const summaryOutput = document.getElementById("summaryOutput");
-    const moodHistory = JSON.parse(localStorage.getItem("moods")) || {}; // Retrieve mood history from localStorage
-    
-    // If no mood entries are found, display a message prompting the user to start tracking
+    const reportStats = document.getElementById("reportStats");
+
+    // Load all mood entries from browser's localStorage
+    // If no data exists, use an empty object
+    const moodHistory = JSON.parse(localStorage.getItem("moods")) || {};
+
+    // CASE 1: No mood data at all
     if (Object.keys(moodHistory).length === 0) {
         summaryOutput.innerHTML = `
             <div class="alert alert-info">
                 <i class="ri-information-line align-middle me-2"></i>
                 No mood entries found. Start tracking your mood to see weekly reports!
             </div>
-            <div class="text-center">
-                <a href="layout.html?page=mood-tracking" class="btn btn-primary">
-                    <i class="ri-add-line me-1"></i>
-                    Start Tracking
-                </a>
-            </div>
         `;
         return;
     }
 
-    // Group mood entries by week and generate HTML content
-    const weeklyData = groupByWeek(moodHistory);
-    
-    let html = '';
-    weeklyData.forEach((week, index) => {
-        const isCurrentWeek = index === 0; // Check if this is the current week
-        html += generateWeekCard(week, isCurrentWeek); // Generate a card for each week
-    });
-    
-    summaryOutput.innerHTML = html; // Insert the generated HTML into the summary output container
-}
+    // Get the date range for current week (Monday to Sunday)
+    const today = new Date();
+    const weekStart = getWeekStartDate(today);  // This week's Monday
+    const weekEnd = getWeekEndDate(today);      // This week's Sunday
 
-/**
- * Groups mood entries by week (using year and week number).
- * 
- * @param {Object} moodHistory - The mood history data stored in localStorage.
- * @returns {Array} - Array of grouped weeks with mood entries.
- */
-function groupByWeek(moodHistory) {
-    const weeks = {}; // Object to store grouped weeks
-    const today = new Date(); // Get today's date
-    
-    // Iterate over each mood entry in moodHistory
-    Object.keys(moodHistory).forEach(dateStr => {
-        const entry = moodHistory[dateStr];
-        const entryDate = new Date(dateStr); // Convert string date to Date object
-        
-        // Calculate the unique key for each week (year-week format)
-        const weekKey = getWeekKey(entryDate);
-        
-        // If this week doesn't exist in the weeks object, initialize it
-        if (!weeks[weekKey]) {
-            weeks[weekKey] = {
-                weekNumber: getWeekNumber(entryDate),
-                year: entryDate.getFullYear(),
-                startDate: getWeekStartDate(entryDate),
-                endDate: getWeekEndDate(entryDate),
-                entries: [],
-                isCurrent: isSameWeek(entryDate, today) // Check if this is the current week
-            };
-        }
-        
-        // Add the entry to the respective week
-        weeks[weekKey].entries.push({
-            date: dateStr,
-            dateObj: entryDate,
-            mood: entry.mood,
-            note: entry.note || "No note",
-            timestamp: entry.timestamp || new Date(dateStr).toISOString()
-        });
+    // Filter mood entries to only include this week's data
+    const currentWeekEntries = Object.entries(moodHistory).filter(([dateStr, entry]) => {
+        const entryDate = new Date(dateStr);
+        // Check if entry date falls within this week
+        return entryDate >= weekStart && entryDate <= weekEnd;
     });
-    
-    // Convert weeks object into an array and sort by week (newest first)
-    return Object.values(weeks)
-        .sort((a, b) => b.startDate - a.startDate)
-        .map(week => {
-            week.entries.sort((a, b) => b.dateObj - a.dateObj); // Sort entries by date (newest first)
-            return week;
-        });
-}
 
-/**
- * Generates a card to display weekly data including mood breakdown, entries, and stats.
- * 
- * @param {Object} week - The week data object.
- * @param {boolean} isCurrentWeek - Flag to check if this is the current week.
- * @returns {string} - HTML string for the week card.
- */
-function generateWeekCard(week, isCurrentWeek) {
-    const moodCount = { Happy: 0, Calm: 0, Stressed: 0, Sad: 0, Angry: 0 };
-    week.entries.forEach(entry => {
+    // CASE 2: Have mood data but none for this week
+    if (currentWeekEntries.length === 0) {
+        summaryOutput.innerHTML = `
+            <div class="alert alert-warning">
+                <i class="ri-information-line align-middle me-2"></i>
+                No mood entries found for this week (${formatDate(weekStart)} - ${formatDate(weekEnd)}).
+            </div>
+        `;
+        reportStats.innerHTML = "";
+        return;
+    }
+
+    // CASE 3: Have data for this week - count and display it!
+    
+    // Initialize counters
+    let totalReports = 0;
+    let moodCount = { Happy: 0, Calm: 0, Stressed: 0, Sad: 0, Angry: 0 };
+
+    // Loop through this week's entries and count each mood type
+    currentWeekEntries.forEach(([dateStr, entry]) => {
+        totalReports++;
+        // Only count if it's a valid mood type
         if (moodCount[entry.mood] !== undefined) {
-            moodCount[entry.mood]++; // Count occurrences of each mood for the week
+            moodCount[entry.mood]++;
         }
     });
-    
-    const dominantMood = Object.entries(moodCount).reduce((a, b) => b[1] > a[1] ? b : a)[0]; // Find the dominant mood for the week
-    
-    const weekTitle = isCurrentWeek ? "This Week's Report" : `Week ${week.weekNumber} Report`; // Set title depending on whether it's the current week
-    
-    const dateRange = `${formatDateShort(week.startDate)} - ${formatDateShort(week.endDate)}`; // Format the date range for the week
-    
-    // Generate the HTML structure for the week card
-    return `
-        <div class="card mb-3 ${isCurrentWeek ? 'border-primary' : ''}">
-            <div class="card-header bg-${isCurrentWeek ? 'primary' : 'light'}">
-                <h5 class="card-title mb-0 ${isCurrentWeek ? 'text-white' : 'text-dark'}">
-                    ${isCurrentWeek ? '<i class="ri-calendar-check-line me-2"></i>' : ''}
-                    ${weekTitle}
-                </h5>
-                <small class="${isCurrentWeek ? 'text-white' : 'text-muted'}">${dateRange}</small>
-            </div>
-            <div class="card-body">
-                <!-- Daily Entries Section -->
-                <div class="mb-3">
-                    <h6 class="text-muted mb-3">Daily Entries</h6>
-                    ${generateDailyEntries(week.entries)} <!-- Generate daily entries for the week -->
-                </div>
-                
-                <!-- Week Summary Section -->
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <div class="border rounded p-3">
-                            <h6 class="text-muted mb-2">Week Statistics</h6>
-                            <p class="mb-1"><strong>Total Entries:</strong> ${week.entries.length}</p>
-                            <p class="mb-0"><strong>Dominant Mood:</strong> ${getMoodBadge(dominantMood)}</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="border rounded p-3">
-                            <h6 class="text-muted mb-2">Mood Breakdown</h6>
-                            ${generateMoodBreakdown(moodCount)} <!-- Generate mood breakdown for the week -->
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+    // Find which mood appeared most frequently this week
+    let mostCommonMood = "None";
+    let maxCount = 0;
+    Object.entries(moodCount).forEach(([mood, count]) => {
+        if (count > maxCount) {
+            maxCount = count;
+            mostCommonMood = mood;
+        }
+    });
+
+    // Display the weekly overview summary
+    summaryOutput.innerHTML = `
+        <div class="alert alert-primary">
+            <h6 class="mb-2"><strong>Weekly Overview</strong></h6>
+            <p class="mb-1"><strong>Week Period:</strong> ${formatDate(weekStart)} - ${formatDate(weekEnd)}</p>
+            <p class="mb-1"><strong>Total Mood Entries:</strong> ${totalReports}</p>
+            <p class="mb-0"><strong>Most Common Mood:</strong> ${mostCommonMood} (${maxCount} times)</p>
         </div>
+    `;
+
+    // Display the mood breakdown with emojis and counts
+    reportStats.innerHTML = `
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            😊 Happy
+            <span class="badge bg-success rounded-pill">${moodCount.Happy}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            😌 Calm
+            <span class="badge bg-info rounded-pill">${moodCount.Calm}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            😣 Stressed
+            <span class="badge bg-warning rounded-pill">${moodCount.Stressed}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            😢 Sad
+            <span class="badge bg-primary rounded-pill">${moodCount.Sad}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            😠 Angry
+            <span class="badge bg-danger rounded-pill">${moodCount.Angry}</span>
+        </li>
     `;
 }
 
-/**
- * Generates the daily entries for the week, including mood, date, time, and note.
- * 
- * @param {Array} entries - The list of entries for the week.
- * @returns {string} - HTML string for the daily entries.
- */
-function generateDailyEntries(entries) {
-    return entries.map(entry => {
-        const dayOfWeek = entry.dateObj.toLocaleDateString('en-US', { weekday: 'long' }); // Get the day of the week
-        const time = new Date(entry.timestamp).toLocaleTimeString('en-US', { 
-            hour: '2-digit', 
-            minute: '2-digit' 
-        }); // Format the time of the entry
-        const formattedDate = entry.dateObj.toLocaleDateString('en-US', { 
-            month: 'short', 
-            day: 'numeric', 
-            year: 'numeric' 
-        }); // Format the date
-
-        return `
-            <div class="d-flex align-items-start mb-2 pb-2 border-bottom">
-                <div class="flex-shrink-0 me-3">
-                    ${getMoodIcon(entry.mood)} <!-- Display mood icon -->
-                </div>
-                <div class="flex-grow-1">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <strong>${dayOfWeek}</strong>
-                            <span class="text-muted ms-2">${formattedDate}</span>
-                        </div>
-                        <small class="text-muted">${time}</small> <!-- Display time of entry -->
-                    </div>
-                    <div class="mt-1">
-                        ${getMoodBadge(entry.mood)} <!-- Display mood badge -->
-                    </div>
-                    ${entry.note !== "No note" ? `<p class="text-muted small mb-0 mt-1">${entry.note}</p>` : ''}
-                </div>
-            </div>
-        `;
-    }).join(''); // Join the array of HTML strings into a single string
-}
+// ===== PDF DOWNLOAD FEATURE =====
 
 /**
- * Generates the mood breakdown for the week (e.g., number of happy, calm, stressed, etc.).
- * 
- * @param {Object} moodCount - The mood count for the week.
- * @returns {string} - HTML string for the mood breakdown.
+ * Allows user to download/print the report as a PDF
+ * Uses the browser's built-in print dialog (which has "Save as PDF" option)
  */
-function generateMoodBreakdown(moodCount) {
-    return Object.entries(moodCount)
-        .filter(([mood, count]) => count > 0) // Only show moods that have a count greater than 0
-        .map(([mood, count]) => `
-            <div class="d-flex justify-content-between align-items-center mb-1">
-                <span>${getMoodBadge(mood)}</span>
-                <span class="badge bg-light text-dark">${count}</span>
-            </div>
-        `).join(''); // Join the array of HTML strings into a single string
-}
-
-/**
- * Generates the HTML badge for a given mood.
- * 
- * @param {string} mood - The mood (Happy, Calm, etc.).
- * @returns {string} - HTML string for the mood badge.
- */
-function getMoodBadge(mood) {
-    const styleMap = {
-        "Happy": { class: "success", icon: "ri-emotion-happy-line" },
-        "Calm": { class: "info", icon: "ri-emotion-normal-line" },
-        "Stressed": { class: "warning", icon: "ri-emotion-line" },
-        "Sad": { class: "primary", icon: "ri-emotion-sad-line" },
-        "Angry": { class: "danger", icon: "ri-emotion-unhappy-line" }
-    };
-    const theme = styleMap[mood] || { class: "secondary", icon: "ri-question-mark" };
+function downloadReportAsPDF() {
+    const downloadButton = document.getElementById("downloadReport");
     
-    return `<span class="badge bg-${theme.class}-subtle text-${theme.class}"><i class="${theme.icon} align-middle me-1"></i>${mood}</span>`;
+    // Hide the download button so it doesn't appear in the PDF
+    downloadButton.style.display = "none";
+    
+    // Set a descriptive document title for the PDF filename
+    const today = new Date().toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+    document.title = `MoodLah Weekly Report - ${today}`;
+
+    // Open the browser's print dialog
+    // User can choose to print or save as PDF
+    window.print();
+
+    // After print dialog closes, show the download button again
+    setTimeout(() => {
+        downloadButton.style.display = "block";
+    }, 100);
 }
 
-/**
- * Generates the icon for a given mood.
- * 
- * @param {string} mood - The mood (Happy, Calm, etc.).
- * @returns {string} - HTML string for the mood icon.
- */
-function getMoodIcon(mood) {
-    const icons = {
-        "Happy": "😊",
-        "Calm": "😌",
-        "Stressed": "😣",
-        "Sad": "😢",
-        "Angry": "😠"
-    };
-    return `<span style="font-size: 24px;">${icons[mood] || "❓"}</span>`; // Return icon for the mood
-}
-
-// Utility Functions
-/**
- * Gets a unique key for each week, based on the year and week number.
- * 
- * @param {Date} date - The date object.
- * @returns {string} - The week key (e.g., "2026-W01").
- */
-function getWeekKey(date) {
-    return `${date.getFullYear()}-W${getWeekNumber(date)}`;
-}
+// ===== HELPER FUNCTIONS FOR DATE CALCULATIONS =====
 
 /**
- * Gets the week number for a given date.
- * 
- * @param {Date} date - The date object.
- * @returns {number} - The week number.
- */
-function getWeekNumber(date) {
-    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    const dayNum = d.getUTCDay() || 7;
-    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-    return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-}
-
-/**
- * Gets the start date of the week for a given date.
- * 
- * @param {Date} date - The date object.
- * @returns {Date} - The start date of the week.
+ * Returns the Monday (start) of the week for a given date
+ * Example: If today is Wednesday Jan 15, returns Monday Jan 13
  */
 function getWeekStartDate(date) {
     const d = new Date(date);
-    const day = d.getDay();
-    const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Adjust for Sunday
+    const day = d.getDay();  // 0=Sunday, 1=Monday, ..., 6=Saturday
+    
+    // Calculate how many days to subtract to get to Monday
+    // If Sunday (0), go back 6 days; otherwise go back (day - 1) days
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+    
     return new Date(d.setDate(diff));
 }
 
 /**
- * Gets the end date of the week for a given date.
- * 
- * @param {Date} date - The date object.
- * @returns {Date} - The end date of the week (6 days after the start date).
+ * Returns the Sunday (end) of the week for a given date
+ * Simply adds 6 days to the week start date
  */
 function getWeekEndDate(date) {
     const start = getWeekStartDate(date);
+    // Add 6 days (in milliseconds) to Monday to get Sunday
     return new Date(start.getTime() + 6 * 24 * 60 * 60 * 1000);
 }
 
 /**
- * Checks if two dates are in the same week.
- * 
- * @param {Date} date1 - The first date object.
- * @param {Date} date2 - The second date object.
- * @returns {boolean} - True if both dates are in the same week, false otherwise.
+ * Formats a date object into readable format
+ * Example: Returns "Jan 15, 2026" instead of "2026-01-15"
  */
-function isSameWeek(date1, date2) {
-    return getWeekKey(date1) === getWeekKey(date2);
-}
-
-/**
- * Formats a date into a short format (e.g., "Jan 01").
- * 
- * @param {Date} date - The date object.
- * @returns {string} - The formatted date string.
- */
-function formatDateShort(date) {
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+function formatDate(date) {
+    return date.toLocaleDateString('en-US', { 
+        month: 'short',   // Short month name (Jan, Feb, etc.)
+        day: 'numeric',   // Day as number
+        year: 'numeric'   // Full year
+    });
 }
