@@ -1,87 +1,140 @@
-/*<!-- ===================== -->
-<!-- Page Script -->
-<!-- ===================== -->*/
+/* ==================================
+   Calming Exercises (Auto from Mood)
+   ================================== */
 
-  const calmingExercises = {
-    angry: [
-      "Do 5 minutes of slow deep breathing (inhale 4s, exhale 6s).",
-      "Go for a brisk walk to release built-up tension.",
-      "Stretch your neck, shoulders, and arms gently."
-    ],
-    sad: [
-      "Try a short guided body scan meditation.",
-      "Wrap yourself in a blanket and practice slow breathing.",
-      "Write down one thing you’re grateful for today."
-    ],
-    anxious: [
-      "Practice box breathing (4–4–4–4).",
-      "Use the 5-4-3-2-1 grounding technique.",
-      "Sit quietly and focus on relaxing your muscles one by one."
-    ],
-    stressed: [
-      "Try progressive muscle relaxation.",
-      "Step away from screens and stretch for 5 minutes.",
-      "Listen to calming instrumental music."
-    ],
-    tired: [
-      "Do gentle stretching or light yoga.",
-      "Close your eyes and rest for 10–15 minutes.",
-      "Practice slow breathing to recharge your energy."
-    ],
-    happy: [
-      "Enjoy light stretching to maintain relaxation.",
-      "Practice mindful breathing to stay present.",
-      "Take a peaceful walk and enjoy your surroundings."
-    ]
-  };
+/*
+  Object that stores calming exercises
+  for each possible mood.
+  The key = mood name
+  The value = array of exercise strings
+*/
+const calmingExercises = {
+  angry: [
+    "Do 5 minutes of slow deep breathing.",
+    "Go for a brisk walk to release tension.",
+    "Stretch your shoulders and neck gently."
+  ],
+  sad: [
+    "Try a guided body scan meditation.",
+    "Wrap yourself in a blanket and breathe slowly.",
+    "Write down one thing you’re grateful for."
+  ],
+  anxious: [
+    "Practice box breathing (4–4–4–4).",
+    "Use the 5-4-3-2-1 grounding technique.",
+    "Relax each muscle group one by one."
+  ],
+  stressed: [
+    "Try progressive muscle relaxation.",
+    "Stretch away from screens for a few minutes.",
+    "Listen to calming instrumental music."
+  ],
+  tired: [
+    "Do gentle stretching or light yoga.",
+    "Close your eyes and rest for 10 minutes.",
+    "Practice slow breathing to recharge."
+  ],
+  happy: [
+    "Enjoy light stretching to stay relaxed.",
+    "Practice mindful breathing.",
+    "Take a peaceful walk and enjoy nature."
+  ]
+};
 
-  function generateCalmingExercises() {
-    const mood = document.getElementById("exerciseMoodSelect").value;
-    const card = document.getElementById("exerciseCard");
-    const list = document.getElementById("exerciseList");
+/*
+  DOMContentLoaded ensures the script runs
+  after the main HTML page is ready.
+  Since your pages are loaded dynamically,
+  we use MutationObserver.
+*/
+document.addEventListener("DOMContentLoaded", () => {
 
-    list.innerHTML = "";
+  // Watches for changes inside #page-content
+  const observer = new MutationObserver(() => {
 
-    if (!mood) {
-      alert("Please select a mood first.");
-      return;
+    // Get the element where mood info will be shown
+    const info = document.getElementById("moodInfo");
+
+    /*
+      Prevents the function from running multiple times
+      by checking a custom data attribute
+    */
+    if (info && !info.dataset.initialized) {
+      initCalmingExercises(); // Initialize page logic
+      info.dataset.initialized = "true";
     }
+  });
 
-    calmingExercises[mood].forEach(item => {
-      const li = document.createElement("li");
-      li.className = "list-group-item";
-      li.textContent = item;
-      list.appendChild(li);
-    });
+  // The container where pages are injected dynamically
+  const pageContent = document.getElementById("page-content");
 
-    card.classList.remove("d-none");
+  // Start observing page-content for changes
+  if (pageContent) {
+    observer.observe(pageContent, { childList: true, subtree: true });
+  }
+});
+
+/*
+  Main function that generates calming exercises
+  based on the user's saved mood
+*/
+function initCalmingExercises() {
+
+  // Get user's mood from localStorage
+  const mood = getTodayMood();
+
+  // Get important DOM elements
+  const info = document.getElementById("moodInfo");
+  const list = document.getElementById("exerciseList");
+  const card = document.getElementById("exerciseCard");
+
+  // Clear previous exercises (important if page reloads)
+  list.innerHTML = "";
+
+  // If no mood is found, show instruction message
+  if (!mood || !calmingExercises[mood]) {
+    info.textContent = "Please record your mood in Mood Tracking first.";
+    return;
   }
 
-  let breathingInterval;
+  // Display mood-based message
+  info.textContent =
+    `Based on your mood today (${mood.toUpperCase()}), here are some calming exercises:`;
 
-  function startBreathing() {
-    clearInterval(breathingInterval);
+  // Loop through exercises for the mood
+  calmingExercises[mood].forEach(exercise => {
 
-    const circle = document.getElementById("breathingCircle");
-    const text = document.getElementById("breathText");
+    // Create a list item
+    const li = document.createElement("li");
+    li.className = "list-group-item";
+    li.textContent = exercise;
 
-    circle.style.transform = "scale(1)";
-    text.innerText = "Inhale";
-    circle.style.transform = "scale(0.6)";
+    // Add to the list
+    list.appendChild(li);
+  });
 
-    breathingInterval = setInterval(() => {
-      setTimeout(() => {
-        text.innerText = "Hold";
-      }, 4000);
+  // Show the card after exercises are generated
+  card.classList.remove("d-none");
+}
 
-      setTimeout(() => {
-        text.innerText = "Exhale";
-        circle.style.transform = "scale(1)";
-      }, 7000);
+/*
+  Function to retrieve today's mood
+  from localStorage (saved in Mood Tracking)
+*/
+function getTodayMood() {
 
-      setTimeout(() => {
-        text.innerText = "Inhale";
-        circle.style.transform = "scale(0.6)";
-      }, 11000);
-    }, 11000);
+  // Get all saved moods
+  const allMoods = JSON.parse(localStorage.getItem("moods")) || {};
+
+  // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split("T")[0];
+
+  // If today's mood exists, return it
+  if (allMoods[today]) {
+    return allMoods[today].mood.toLowerCase();
   }
+
+  // Fallback: return the most recent mood if today not found
+  const dates = Object.keys(allMoods).sort().reverse();
+  return dates.length ? allMoods[dates[0]].mood.toLowerCase() : null;
+}

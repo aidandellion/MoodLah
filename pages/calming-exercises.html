@@ -1,73 +1,35 @@
-<!-- ===================== -->
-<!-- Calming Exercises Page -->
-<!-- ===================== -->
+<!-- Bootstrap row for page header -->
+<div class="row">
+    <div class="col-12">
+        <!-- Page title container -->
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <!-- Page title -->
+            <h4 class="mb-sm-0">Calming Exercises</h4>
 
-<div class="row mb-4">
-  <div class="col">
-    <h4 class="mb-1">Calming Exercises 🧘‍♀️</h4>
-    <p class="text-muted">
-      Try calming activities recommended based on how you feel today.
-    </p>
-  </div>
-</div>
-
-<!-- Mood Selection -->
-<div class="row mb-4">
-  <div class="col-xl-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title mb-3">Select your current mood</h5>
-
-        <select id="exerciseMoodSelect" class="form-select">
-          <option value="">-- Select your mood --</option>
-          <option value="angry">😡 Angry</option>
-          <option value="sad">😢 Sad</option>
-          <option value="anxious">😰 Anxious</option>
-          <option value="stressed">🤯 Stressed</option>
-          <option value="tired">😴 Tired</option>
-          <option value="happy">😊 Happy</option>
-        </select>
-
-        <button
-          class="btn btn-primary mt-3"
-          onclick="generateCalmingExercises()"
-        >
-          Get Calming Exercises
-        </button>
-      </div>
+            <!-- This paragraph is UPDATED BY JAVASCRIPT
+                 to show the user's mood information -->
+            <p class="text-muted" id="moodInfo"></p>
+        </div>
     </div>
-  </div>
 </div>
 
-<!-- Exercises Output -->
+<!-- Container for the calming exercises list -->
 <div class="row">
   <div class="col-xl-8">
+
+    <!-- Card that is hidden by default (d-none)
+         It will be shown by JavaScript once exercises are generated -->
     <div class="card d-none" id="exerciseCard">
       <div class="card-body">
+
+        <!-- Card title -->
         <h5 class="card-title mb-3">Recommended Exercises</h5>
-        <ul
-          id="exerciseList"
-          class="list-group list-group-flush"
-        ></ul>
+
+        <!-- List that JavaScript will dynamically fill
+             with calming exercises -->
+        <ul id="exerciseList" class="list-group list-group-flush"></ul>
+
       </div>
     </div>
   </div>
 </div>
-
-<!-- Guided Breathing -->
-<div class="row mt-5 text-center">
-  <div class="col">
-    <h4 class="mb-2">Guided Breathing 🫁</h4>
-    <p class="text-muted" id="breathText">Get ready...</p>
-
-    <div class="breathing-container">
-      <div id="breathingCircle"></div>
-    </div>
-
-    <button class="btn btn-primary mt-4" onclick="startBreathing()">
-      Start Breathing Exercise
-    </button>
-  </div>
-</div>
-
-
