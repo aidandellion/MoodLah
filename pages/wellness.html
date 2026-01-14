@@ -1,50 +1,29 @@
-    <div class="row mb-4">
-        <div class="col">
-        <h4 class="mb-1">Wellness Tips 🌱</h4>
-        <p class="text-muted">
-            Get personalized wellness suggestions based on your current mood.
-        </p>
-        </div>
+<!-- Page header -->
+<div class="row">
+  <div class="col-12">
+    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+      <h4 class="mb-sm-0">Wellness Tips</h4>
+
+      <!-- JavaScript updates this text dynamically -->
+      <p class="text-muted" id="wellnessMoodInfo"></p>
     </div>
-
-    <!-- Mood Selection -->
-    <div class="row mb-4">
-        <div class="col-xl-6">
-        <div class="card">
-            <div class="card-body">
-            <h5 class="card-title mb-3">How are you feeling today?</h5>
-
-            <select id="moodSelect" class="form-select">
-                <option value="">-- Select your mood --</option>
-                <option value="happy">😊 Happy</option>
-                <option value="sad">😢 Sad</option>
-                <option value="angry">😡 Angry</option>
-                <option value="anxious">😰 Anxious</option>
-                <option value="tired">😴 Tired</option>
-                <option value="stressed">🤯 Stressed</option>
-            </select>
-
-            <button
-                class="btn btn-primary mt-3"
-                onclick="generateWellnessTips()"
-            >
-                Generate Wellness Tips
-            </button>
-            </div>
-        </div>
-        </div>
-    </div>
-
-    <!-- Wellness Tips Output -->
-    <div class="row">
-        <div class="col-xl-8">
-        <div class="card d-none" id="tipsCard">
-            <div class="card-body">
-            <h5 class="card-title mb-3">Your Wellness Tips</h5>
-            <ul id="tipsList" class="list-group list-group-flush"></ul>
-            </div>
-        </div>
-        </div>
-    </div>
+  </div>
 </div>
 
+<!-- Wellness tips output -->
+<div class="row">
+  <div class="col-xl-8">
+
+    <!-- Hidden card shown after tips are generated -->
+    <div class="card d-none" id="tipsCard">
+      <div class="card-body">
+
+        <h5 class="card-title mb-3">Your Wellness Tips</h5>
+
+        <!-- JS inserts tips here -->
+        <ul id="tipsList" class="list-group list-group-flush"></ul>
+
+      </div>
+    </div>
+  </div>
+</div>
