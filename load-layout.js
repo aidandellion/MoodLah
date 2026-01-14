@@ -17,19 +17,8 @@ function loadPageContent() {
     });
 }
 
-function loadScript(src) {
-  return new Promise((resolve, reject) => {
-    const script = document.createElement("script");
-    script.src = src;
-    script.onload = resolve;
-    script.onerror = reject;
-    document.body.appendChild(script);
-  });
-}
-
 Promise.all([
   loadLayout("topbar", "layout/topbar.html"),
-  loadLayout("theme-settings", "layout/theme-settings.html"),
   loadLayout("footer", "layout/footer.html"),
 ])
   .then(() => loadScript("assets/js/app.js")) // app.js AFTER theme settings exists
