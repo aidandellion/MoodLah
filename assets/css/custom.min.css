@@ -52,3 +52,27 @@ html[data-sidebar="dark"] {
   transition: transform 4s ease-in-out;
 }
 
+.mood-happy-subtle {
+  background-color: rgba(86, 180, 233, 0.2) !important;
+  color: #56b4e9 !important;
+}
+
+.mood-calm-subtle {
+  background-color: rgba(0, 158, 115, 0.2) !important;
+  color: #009e73 !important;
+}
+
+.mood-stressed-subtle {
+  background-color: rgba(240, 228, 66, 0.2) !important;
+  color: #f0e442 !important;
+}
+
+.mood-sad-subtle {
+  background-color: rgba(204, 121, 167, 0.2) !important;
+  color: #cc79a7 !important;
+}
+
+.mood-angry-subtle {
+  background-color: rgba(213, 94, 0, 0.2) !important;
+  color: #d55e00 !important;
+}
