@@ -122,19 +122,28 @@ function initCalmingExercises() {
   from localStorage (saved in Mood Tracking)
 */
 function getTodayMood() {
+  const allMoods = JSON.parse(localStorage.getItem("moods"));
 
-  // Get all saved moods
-  const allMoods = JSON.parse(localStorage.getItem("moods")) || {};
-
-  // Get today's date in YYYY-MM-DD format
-  const today = new Date().toISOString().split("T")[0];
-
-  // If today's mood exists, return it
-  if (allMoods[today]) {
-    return allMoods[today].mood.toLowerCase();
+  // Case 1: User never saved any mood
+  if (!allMoods || Object.keys(allMoods).length === 0) {
+    return { status: "NO_MOOD" };
   }
 
-  // Fallback: return the most recent mood if today not found
+  const today = new Date().toISOString().split("T")[0];
+
+  // Case 2: Mood exists for today
+  if (allMoods[today]) {
+    return {
+      status: "FOUND",
+      mood: allMoods[today].mood.toLowerCase()
+    };
+  }
+
+  // Case 3: No mood today, but previous mood exists
   const dates = Object.keys(allMoods).sort().reverse();
-  return dates.length ? allMoods[dates[0]].mood.toLowerCase() : null;
+  return {
+    status: "FOUND",
+    mood: allMoods[dates[0]].mood.toLowerCase()
+  };
 }
+
