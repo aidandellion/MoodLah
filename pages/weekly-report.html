@@ -1,0 +1,60 @@
+<!-- 
+    WEEKLY REPORTS PAGE
+    ===================
+    This page displays a summary of mood entries for the current week.
+    It shows statistics like total entries, most common mood, and a breakdown by mood type.
+-->
+
+<!-- Page Title Section -->
+<div class="row">
+    <div class="col-12">
+        <!-- Title bar that spans the full width -->
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Weekly Reports</h4>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content Section -->
+<div class="row justify-content-center">
+    <!-- Center column with responsive width (8 columns on large screens) -->
+    <div class="col-lg-8">
+        
+        <!-- Main Report Card -->
+        <div class="card mt-3">
+            
+            <!-- Card Header with Title -->
+            <div class="card-header">
+                <h5 class="card-title mb-0">Weekly Mood Summary</h5>
+            </div>
+
+            <!-- Card Body containing all report content -->
+            <div class="card-body">
+                
+                <!-- Weekly Summary Output -->
+                <!-- This div will be populated by JavaScript with:
+                     - Week period (Monday - Sunday dates)
+                     - Total mood entries count
+                     - Most common mood of the week
+                -->
+                <div id="summaryOutput"></div>
+
+                <!-- Weekly Report Stats -->
+                <!-- This list will be populated by JavaScript with mood counts:
+                     - Happy count (green badge)
+                     - Calm count (blue badge)
+                     - Stressed count (yellow badge)
+                     - Sad count (blue badge)
+                     - Angry count (red badge)
+                -->
+                <ul id="reportStats" class="list-group mt-4"></ul>
+
+                <!-- Download/Print Button -->
+                <!-- When clicked, opens browser print dialog to save report as PDF -->
+                <button class="btn btn-primary mt-4" id="downloadReport">Download Report</button>
+                
+            </div>
+        </div>
+        
+    </div>
+</div>
