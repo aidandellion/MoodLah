@@ -85,15 +85,20 @@ function initCalmingExercises() {
 
   // Get important DOM elements
   const info = document.getElementById("moodInfo");
+  const message = document.getElementById("displayMessage");  // card message
   const list = document.getElementById("exerciseList");
   const card = document.getElementById("exerciseCard");
 
   // Clear previous exercises (important if page reloads)
   list.innerHTML = "";
+  message.textContent = "";
+  card.classList.add("d-none");
 
   // If no mood is found, show instruction message
-  if (!mood || !calmingExercises[mood]) {
-    info.textContent = "Please record your mood in Mood Tracking first.";
+  if (!mood || !wellnessTips[mood]) {
+    info.textContent = ""; // keep header clean
+    message.textContent = "Please record your mood in the Mood Tracking page first.";
+    card.classList.remove("d-none"); // show card with message
     return;
   }
 
@@ -122,28 +127,19 @@ function initCalmingExercises() {
   from localStorage (saved in Mood Tracking)
 */
 function getTodayMood() {
-  const allMoods = JSON.parse(localStorage.getItem("moods"));
 
-  // Case 1: User never saved any mood
-  if (!allMoods || Object.keys(allMoods).length === 0) {
-    return { status: "NO_MOOD" };
-  }
+  // Get all saved moods
+  const allMoods = JSON.parse(localStorage.getItem("moods")) || {};
 
+  // Get today's date in YYYY-MM-DD format
   const today = new Date().toISOString().split("T")[0];
 
-  // Case 2: Mood exists for today
+  // If today's mood exists, return it
   if (allMoods[today]) {
-    return {
-      status: "FOUND",
-      mood: allMoods[today].mood.toLowerCase()
-    };
+    return allMoods[today].mood.toLowerCase();
   }
 
-  // Case 3: No mood today, but previous mood exists
+  // Fallback: return the most recent mood if today not found
   const dates = Object.keys(allMoods).sort().reverse();
-  return {
-    status: "FOUND",
-    mood: allMoods[dates[0]].mood.toLowerCase()
-  };
+  return dates.length ? allMoods[dates[0]].mood.toLowerCase() : null;
 }
-

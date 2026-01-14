@@ -53,18 +53,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function initWellnessTips() {
   const mood = getTodayMood();
-  const info = document.getElementById("wellnessMoodInfo");
+
+  const info = document.getElementById("wellnessMoodInfo");     // header text
+  const message = document.getElementById("displayMessage");  // card message
   const list = document.getElementById("tipsList");
   const card = document.getElementById("tipsCard");
 
+  // Reset previous content
   list.innerHTML = "";
+  message.textContent = "";
+  card.classList.add("d-none");
 
+  // No mood recorded
   if (!mood || !wellnessTips[mood]) {
-    info.textContent = "Please record your mood in Mood Tracking first.";
+    info.textContent = ""; // keep header clean
+    message.textContent = "Please record your mood in the Mood Tracking page first.";
+    card.classList.remove("d-none"); // show card with message
     return;
   }
 
-  info.textContent = `Based on your mood today (${mood.toUpperCase()}), here are some wellness tips:`;
+  // Mood exists
+  info.textContent =
+    `Based on your mood today (${mood.toUpperCase()}), here are some wellness tips:`;
 
   wellnessTips[mood].forEach(tip => {
     const li = document.createElement("li");
@@ -76,30 +86,16 @@ function initWellnessTips() {
   card.classList.remove("d-none");
 }
 
+
 /* Shared Mood Reader */
 function getTodayMood() {
-  const allMoods = JSON.parse(localStorage.getItem("moods"));
-
-  // Case 1: User never saved any mood
-  if (!allMoods || Object.keys(allMoods).length === 0) {
-    return { status: "NO_MOOD" };
-  }
-
+  const allMoods = JSON.parse(localStorage.getItem("moods")) || {};
   const today = new Date().toISOString().split("T")[0];
 
-  // Case 2: Mood exists for today
   if (allMoods[today]) {
-    return {
-      status: "FOUND",
-      mood: allMoods[today].mood.toLowerCase()
-    };
+    return allMoods[today].mood.toLowerCase();
   }
 
-  // Case 3: No mood today, but previous mood exists
   const dates = Object.keys(allMoods).sort().reverse();
-  return {
-    status: "FOUND",
-    mood: allMoods[dates[0]].mood.toLowerCase()
-  };
+  return dates.length ? allMoods[dates[0]].mood.toLowerCase() : null;
 }
-
