@@ -229,7 +229,7 @@ function renderMoodDonut(moodEntries) {
       chart: { type: "donut", height: 320 },
       labels: MOODS,
       series,
-      colors: ["#0d6efd", "#20c997", "#ffc107", "#ff4d4f", "#6f42c1"],
+      colors: ["#56B4E9", "#009E73", "#F0E442", "#CC79A7", "#D55E00"],
       legend: { position: "bottom" },
       dataLabels: { enabled: false },
       stroke: { width: 0 },
